@@ -1,0 +1,23 @@
+- hosts: app_server
+  become: yes
+
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Copy application files
+      copy:
+        src: /local/path/to/app
+        dest: /remote/path/to/app
+
+    - name: Start application
+      command: docker-compose up -d
+      args:
+        chdir: /remote/path/to/app
